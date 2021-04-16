@@ -2,18 +2,16 @@ package ba.etf.rma21.projekat.data.repositories
 
 import ba.etf.rma21.projekat.data.kvizovi
 import ba.etf.rma21.projekat.data.models.Kviz
+import java.util.*
 
 class KvizRepository {
 
     companion object {
-        // TODO: Implementirati
         init {
-            // TODO: Implementirati
         }
 
         fun getMyKvizes(): List<Kviz> {
-            // TODO: Implementirati
-            return emptyList()
+            return kvizovi();
         }
 
         fun getAll(): List<Kviz> {
@@ -21,19 +19,33 @@ class KvizRepository {
         }
 
         fun getDone(): List<Kviz> {
-            // TODO: Implementirati
-            return emptyList()
+            var lista = mutableListOf<Kviz>()
+            for(K in getMyKvizes()){
+                if(K.datumRada!=null){
+                    lista.add(K)
+                }
+            }
+            return lista
         }
 
         fun getFuture(): List<Kviz> {
-            // TODO: Implementirati
-            return emptyList()
+            var lista = mutableListOf<Kviz>()
+            for(K in getMyKvizes()){
+                if(K.datumRada==null && K.datumPocetka.after(Calendar.getInstance().time)){
+                    lista.add(K)
+                }
+            }
+            return lista
         }
 
         fun getNotTaken(): List<Kviz> {
-            // TODO: Implementirati
-            return emptyList()
+            var lista = mutableListOf<Kviz>()
+            for(K in getMyKvizes()){
+                if(K.datumRada==null && K.datumPocetka.before(Calendar.getInstance().time) && K.datumKraj.before(Calendar.getInstance().time)){
+                            lista.add(K)
+                        }
+            }
+            return lista
         }
-        // TODO: Implementirati i ostale potrebne metode
     }
 }

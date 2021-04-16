@@ -5,8 +5,7 @@ import ba.etf.rma21.projekat.data.repositories.KvizRepository
 
 class KvizViewModel {
     fun getMyKvizes(): List<Kviz> {
-
-        return emptyList()
+        return KvizRepository.getMyKvizes()
     }
 
     fun getAll(): List<Kviz> {
@@ -14,17 +13,14 @@ class KvizViewModel {
     }
 
     fun getDone(): List<Kviz> {
-
-        return emptyList()
+        return KvizRepository.getDone()
     }
 
     fun getFuture(): List<Kviz> {
-
-        return emptyList()
+        return KvizRepository.getFuture()
     }
 
     fun getNotTaken(): List<Kviz> {
-
-        return emptyList()
+        return KvizRepository.getNotTaken()
     }
 }
