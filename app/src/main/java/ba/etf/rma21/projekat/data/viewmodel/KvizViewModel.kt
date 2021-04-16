@@ -2,25 +2,31 @@ package ba.etf.rma21.projekat.data.viewmodel
 
 import ba.etf.rma21.projekat.data.models.Kviz
 import ba.etf.rma21.projekat.data.repositories.KvizRepository
+import java.util.*
 
 class KvizViewModel {
+
     fun getMyKvizes(): List<Kviz> {
-        return KvizRepository.getMyKvizes()
+        return sortiraj(KvizRepository.getMyKvizes())
     }
 
     fun getAll(): List<Kviz> {
-        return KvizRepository.getAll()
+        return sortiraj(KvizRepository.getAll())
     }
 
     fun getDone(): List<Kviz> {
-        return KvizRepository.getDone()
+        return sortiraj(KvizRepository.getDone())
     }
 
     fun getFuture(): List<Kviz> {
-        return KvizRepository.getFuture()
+        return sortiraj(KvizRepository.getFuture())
     }
 
     fun getNotTaken(): List<Kviz> {
-        return KvizRepository.getNotTaken()
+        return sortiraj(KvizRepository.getNotTaken())
+    }
+
+    fun sortiraj(lista : List<Kviz>) : List<Kviz>{
+        return lista.sortedBy { it.datumPocetka }
     }
 }
