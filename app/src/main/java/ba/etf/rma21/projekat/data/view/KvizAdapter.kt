@@ -11,8 +11,8 @@ import ba.etf.rma21.projekat.data.models.Kviz
 import java.text.SimpleDateFormat
 import java.util.*
 
-class KvizListAdapter(
-        private var kvizovi: List<Kviz>) : RecyclerView.Adapter<KvizListAdapter.MovieViewHolder>() {
+class KvizAdapter(
+        private var kvizovi: List<Kviz>) : RecyclerView.Adapter<KvizAdapter.MovieViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val view = LayoutInflater
@@ -23,6 +23,7 @@ class KvizListAdapter(
 
     override fun getItemCount(): Int = kvizovi.size
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
+        //holder.upisDugme.setImageResource(R.drawable.dodaj)
         val formatter = SimpleDateFormat("dd.MM.yyyy")
         if(kvizovi[position].datumRada!=null){
             holder.oznaka.setImageResource(R.drawable.plava)
@@ -54,6 +55,7 @@ class KvizListAdapter(
     }
 
     inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        //val upisDugme : ImageView = itemView.findViewById(R.id.upisDugme)
         val oznaka : ImageView = itemView.findViewById(R.id.oznaka)
         val predmet: TextView = itemView.findViewById(R.id.predmet)
         val ime_kviza: TextView = itemView.findViewById(R.id.ime_kviza)

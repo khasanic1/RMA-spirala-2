@@ -9,10 +9,10 @@ class PredmetRepository {
             return emptyList()
         }
 
-        fun getAll(): List<Predmet> {
+        /*fun getAll(): List<Predmet> {
             // TODO: Implementirati
             return emptyList()
-        }
+        }*/
         // TODO: Implementirati i ostale potrebne metode
     }
 
