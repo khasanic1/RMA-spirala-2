@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ba.etf.rma21.projekat.R
 import ba.etf.rma21.projekat.data.models.Kviz
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -23,7 +24,7 @@ class KvizAdapter(
 
     override fun getItemCount(): Int = kvizovi.size
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        //holder.upisDugme.setImageResource(R.drawable.dodaj)
+
         val formatter = SimpleDateFormat("dd.MM.yyyy")
         if(kvizovi[position].datumRada!=null){
             holder.oznaka.setImageResource(R.drawable.plava)
@@ -55,7 +56,6 @@ class KvizAdapter(
     }
 
     inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        //val upisDugme : ImageView = itemView.findViewById(R.id.upisDugme)
         val oznaka : ImageView = itemView.findViewById(R.id.oznaka)
         val predmet: TextView = itemView.findViewById(R.id.predmet)
         val ime_kviza: TextView = itemView.findViewById(R.id.ime_kviza)

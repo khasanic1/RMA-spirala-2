@@ -1,9 +1,11 @@
 package ba.etf.rma21.projekat
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -11,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ba.etf.rma21.projekat.data.viewmodel.KvizViewModel
 
 import com.example.cinaeste.view.KvizAdapter
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 class MainActivity : AppCompatActivity() {
@@ -18,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var kvizovi: RecyclerView
     private lateinit var spinner: Spinner
     private lateinit var kvizoviAdapter: KvizAdapter
+    private lateinit var upisDugme: FloatingActionButton
     private var kvizViewModel = KvizViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +32,12 @@ class MainActivity : AppCompatActivity() {
         kvizoviAdapter = KvizAdapter(arrayListOf())
         kvizovi.adapter = kvizoviAdapter
         kvizoviAdapter.updateKvizovi(kvizViewModel.getAll())
+
+        upisDugme = findViewById(R.id.upisDugme)
+        upisDugme.setOnClickListener{
+            val intent = Intent(this, UpisPredmet::class.java)
+            startActivity(intent)
+        }
         spinner = findViewById(R.id.filterKvizova)
         val opcije = listOf("Svi moji kvizovi", "Svi kvizovi", "Urađeni kvizovi", "Budući kvizovi", "Prošli kvizovi")
         spinner.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, opcije)

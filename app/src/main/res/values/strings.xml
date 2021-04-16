@@ -7,4 +7,35 @@
         <item>Budući kvizovi</item>
         <item>Prošli kvizovi</item>
     </string-array>
+    <string-array name="odabirGodina">
+        <item>Prva</item>
+        <item>Druga</item>
+        <item>Treca</item>
+        <item>Cetvrta</item>
+        <item>Peta</item>
+    </string-array>
+    <string-array name="odabirPredmet">
+        <item>OOAD</item>
+        <item>RMA</item>
+        <item>RA</item>
+        <item>ORM</item>
+        <item>AFJ</item>
+        <item>US</item>
+        <item>IM1</item>
+        <item>IM2</item>
+        <item>OE</item>
+        <item>IF1</item>
+    </string-array>
+    <string-array name="odabirGrupa">
+        <item>OOAD 1-2</item>
+        <item>RMA 2-2</item>
+        <item>RA5</item>
+        <item>ORM-Grupa7</item>
+        <item>AFJ-2</item>
+        <item>US-2020-Grupa3</item>
+        <item>IM1 3-1</item>
+        <item>IM2 1-1</item>
+        <item>OE Grupa2</item>
+        <item>IF1 Grupa6</item>
+    </string-array>
 </resources>
