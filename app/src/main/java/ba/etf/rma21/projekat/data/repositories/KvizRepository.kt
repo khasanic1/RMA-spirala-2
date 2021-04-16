@@ -9,8 +9,8 @@ class KvizRepository {
     companion object {
         init {
         }
-        //Posto 2. zad nije uradjen getMyKvizes()
-        //On zasad vraca sve kvizove
+        //Posto 2. zad nije uradjen
+        //getMyKvizes() zasad vraca sve kvizove
         //Ostale fje rade preko toga sta getMyKvizes() vrati, tako da su one ispravne
         fun getMyKvizes(): List<Kviz> {
             return kvizovi();
