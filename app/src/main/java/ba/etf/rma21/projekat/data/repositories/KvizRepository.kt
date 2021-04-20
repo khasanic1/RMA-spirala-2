@@ -2,6 +2,7 @@ package ba.etf.rma21.projekat.data.repositories
 
 import ba.etf.rma21.projekat.data.kvizovi
 import ba.etf.rma21.projekat.data.models.Kviz
+import ba.etf.rma21.projekat.data.repositories.KorisnikRepository.Companion.korisnik
 import java.util.*
 
 class KvizRepository {
@@ -9,11 +10,18 @@ class KvizRepository {
     companion object {
         init {
         }
-        //Posto 2. zad nije uradjen
-        //getMyKvizes() zasad vraca sve kvizove
-        //Ostale fje rade preko toga sta getMyKvizes() vrati, tako da su one ispravne
         fun getMyKvizes(): List<Kviz> {
-            return kvizovi();
+            var lista = mutableListOf<Kviz>()
+            var brojac = 0
+            while(brojac < korisnik.predmeti.size){
+                for(K in getAll()){
+                    if(K.nazivPredmeta== korisnik.predmeti[brojac] && K.nazivGrupe == korisnik.grupe[brojac]){
+                        lista.add(K)
+                    }
+                }
+                brojac++
+            }
+            return lista;
         }
 
         fun getAll(): List<Kviz> {

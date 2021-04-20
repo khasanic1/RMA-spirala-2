@@ -15,92 +15,257 @@ fun kvizovi(): List<Kviz> {
     return listOf(
             Kviz(
                     "Kviz 1",
-                    "RMA",
+                    "Inženjerska matematika 1",
                     datum(10,4,2021),
-                    datum(20,4,2021),
+                    datum(20,4,2022),
                     datum(13,4,2021),
-                    2,"RMA1-2", 1.5f
+                    2,"RI1-1", 1.5f
                     ),
             Kviz(
                     "Kviz 2",
-                    "ORM",
+                    "Inženjerska matematika 1",
                     datum(10,4,2021),
-                    datum(20,4,2021),
-                    null,
-                    5,"ORM7", null
+                    datum(20,4,2022),null,
+                    2,"RI1-2", null
             ),
             Kviz(
                     "Kviz 3",
-                    "RA",
-                    datum(20,4,2021),
-                    datum(25,4,2021),
-                    null,
-                    30,"RA4", null
+                    "Inženjerska fizika 1",
+                    datum(10,4,2021),
+                    datum(20,4,2022),
+                    datum(13,4,2021),
+                    2,"RI1-1", 1.5f
             ),
             Kviz(
                     "Kviz 4",
-                    "OOAD",
+                    "Inženjerska fizika 1",
                     datum(10,4,2021),
-                    datum(14,4,2021),
-                    null,
-                    15,"OOAD1", null
+                    datum(20,4,2022),null,
+                    2,"RI1-2", null
             ),
             Kviz(
                     "Kviz 5",
-                    "RMA",
+                    "Osnove elektrotehnike",
                     datum(10,4,2021),
+                    datum(20,4,2022),
                     datum(13,4,2021),
-                    null,
-                    15,"RMA2-2", null
+                    2,"RI1-1", 1.5f
             ),
             Kviz(
                     "Kviz 6",
-                    "ORM",
-                    datum(18,5,2021),
-                    datum(20,5,2021),
-                    null,
-                    45,"ORM4", null
+                    "Osnove elektrotehnike",
+                    datum(10,4,2021),
+                    datum(20,4,2022),null,
+                    2,"RI1-2", null
             ),
             Kviz(
                     "Kviz 7",
-                    "RA",
-                    datum(20,3,2021),
-                    datum(25,5,2021),
-                    datum(15,4,2021),
-                    30,"RA1", 10f
+                    "Uvod u programiranje",
+                    datum(10,4,2021),
+                    datum(20,4,2022),
+                    datum(13,4,2021),
+                    2,"RI1-1", 1.5f
             ),
             Kviz(
                     "Kviz 8",
-                    "OOAD",
+                    "Uvod u programiranje",
                     datum(10,4,2021),
-                    datum(14,5,2021),
-                    null,
-                    15,"OOAD5", null
+                    datum(20,4,2022),null,
+                    2,"RI1-2", null
             ),
             Kviz(
                     "Kviz 9",
-                    "IM1",
-                    datum(28,5,2021),
-                    datum(29,5,2021),
-                    null,
-                    25,"IM1-1", null
+                    "Logički dizajn",
+                    datum(10,4,2021),
+                    datum(20,4,2022),
+                    datum(16,4,2021),
+                    2,"RI2-1", null
             ),
             Kviz(
                     "Kviz 10",
-                    "IM2",
-                    datum(16,4,2021),
-                    datum(16,5,2021),
-                    datum(16,5,2021),
-                    15,"IM2-3", 7.6f
+                    "Logički dizajn",
+                    datum(10,4,2021),
+                    datum(20,4,2022),
+                    null,
+                    2,"RI2-2", null
             ),
             Kviz(
                     "Kviz 11",
-                    "IM2",
-                    datum(11,4,2021),
-                    datum(11,4,2021),
+                    "Sistemsko programiranje",
+                    datum(10,4,2021),
+                    datum(20,4,2022),
+                    datum(16,4,2021),
+                    23,"RI2-1", null
+            ),
+            Kviz(
+                    "Kviz 12",
+                    "Sistemsko programiranje",
+                    datum(10,4,2022),
+                    datum(20,4,2022),
                     null,
-                    15,"IM2-4", null
+                    22,"RI2-2", null
+            ),
+            Kviz(
+                    "Kviz 13",
+                    "Razvoj mobilnih aplikacija",
+                    datum(10,4,2021),
+                    datum(12,4,2021),
+                    null,
+                    23,"RI2-1", null
+            ),
+            Kviz(
+                    "Kviz 14",
+                    "Razvoj mobilnih aplikacija",
+                    datum(10,4,2021),
+                    datum(20,4,2022),
+                    datum(15,4,2021),
+                    22,"RI2-2", 15.5f
+            ),
+            Kviz(
+                    "Kviz 15",
+                    "Web tehnologije",
+                    datum(10,4,2021),
+                    datum(20,4,2022),
+                    datum(15,4,2021),
+                    32,"RI3-1", 15.5f
+            ),
+            Kviz(
+                    "Kviz 16",
+                    "Web tehnologije",
+                    datum(10,4,2021),
+                    datum(17,4,2021),
+                    null,
+                    42,"RI3-2", null
+            ),
+            Kviz(
+                    "Kviz 17",
+                    "Računarska grafika",
+                    datum(10,4,2021),
+                    datum(20,4,2022),
+                    datum(15,4,2021),
+                    32,"RI3-1", 15.5f
+            ),
+            Kviz(
+                    "Kviz 18",
+                    "Računarska grafika",
+                    datum(10,4,2021),
+                    datum(17,4,2021),
+                    null,
+                    42,"RI3-2", null
+            ),
+            Kviz(
+                    "Kviz 19",
+                    "Softverski inženjering",
+                    datum(10,4,2021),
+                    datum(20,4,2022),
+                    null,
+                    17,"RI3-1", null
+            ),
+            Kviz(
+                    "Kviz 20",
+                    "Softverski inženjering",
+                    datum(10,4,2022),
+                    datum(17,4,2022),
+                    null,
+                    11,"RI3-2", null
+            ),
+            Kviz(
+                    "Kviz 21",
+                    "Računarska vizija",
+                    datum(10,4,2021),
+                    datum(17,4,2022),
+                    null,
+                    14,"RI4-1", null
+            ),
+            Kviz(
+                    "Kviz 22",
+                    "Računarska vizija",
+                    datum(10,4,2022),
+                    datum(17,4,2022),
+                    null,
+                    3,"RI4-2", null
+            ),
+            Kviz(
+                    "Kviz 23",
+                    "Mašinsko učenje",
+                    datum(10,4,2021),
+                    datum(17,4,2022),
+                    datum(10,4,2021),
+                    7,"RI4-1", 15f
+            ),
+            Kviz(
+                    "Kviz 24",
+                    "Mašinsko učenje",
+                    datum(10,4,2021),
+                    datum(19,4,2021),
+                    null,
+                    60,"RI4-2", null
+            ),
+            Kviz(
+                    "Kviz 25",
+                    "Baze podataka",
+                    datum(10,4,2021),
+                    datum(17,4,2022),
+                    datum(11,4,2021),
+                    58,"RI4-1", 20f
+            ),
+            Kviz(
+                    "Kviz 26",
+                    "Baze podataka",
+                    datum(10,4,2021),
+                    datum(19,4,2021),
+                    null,
+                    43,"RI4-2", null
+            ),
+            Kviz(
+                    "Kviz 27",
+                    "Razvoj igara",
+                    datum(10,4,2021),
+                    datum(17,4,2022),
+                    null,
+                    14,"RI5-1", null
+            ),
+            Kviz(
+                    "Kviz 28",
+                    "Razvoj igara",
+                    datum(10,4,2022),
+                    datum(17,4,2022),
+                    null,
+                    3,"RI5-2", null
+            ),
+            Kviz(
+                    "Kviz 29",
+                    "Tehnologije sigurnosti",
+                    datum(10,4,2021),
+                    datum(17,4,2022),
+                    datum(10,4,2021),
+                    7,"RI5-1", 15f
+            ),
+            Kviz(
+                    "Kviz 30",
+                    "Tehnologije sigurnosti",
+                    datum(10,4,2021),
+                    datum(19,4,2021),
+                    null,
+                    60,"RI5-2", null
+            ),
+            Kviz(
+                    "Kviz 31",
+                    "Data mining",
+                    datum(10,4,2021),
+                    datum(17,4,2022),
+                    datum(11,4,2021),
+                    58,"RI5-1", 20f
+            ),
+            Kviz(
+                    "Kviz 32",
+                    "Data mining",
+                    datum(10,4,2021),
+                    datum(19,4,2021),
+                    null,
+                    43,"RI5-2", null
             )
+
 
 
     )

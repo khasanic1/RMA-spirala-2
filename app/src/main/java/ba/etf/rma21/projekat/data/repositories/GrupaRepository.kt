@@ -1,16 +1,20 @@
 package ba.etf.rma21.projekat.data.repositories
 
+import ba.etf.rma21.projekat.data.grupe
 import ba.etf.rma21.projekat.data.models.Grupa
 
 class GrupaRepository {
     companion object {
         init {
-            // TODO: Implementirati
         }
-
         fun getGroupsByPredmet(nazivPredmeta: String): List<Grupa> {
-            // TODO: Implementirati
-            return emptyList()
+            var lista = mutableListOf<Grupa>()
+            for(G in grupe()){
+                if(G.nazivPredmeta==nazivPredmeta){
+                    lista.add(G)
+                }
+            }
+            return lista
         }
     }
 }

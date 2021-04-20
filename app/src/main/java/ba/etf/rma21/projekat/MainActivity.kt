@@ -5,13 +5,11 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Button
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ba.etf.rma21.projekat.data.viewmodel.KvizViewModel
-
 import com.example.cinaeste.view.KvizAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -60,5 +58,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        kvizoviAdapter.updateKvizovi(kvizViewModel.getMyKvizes())
+    }
+
 }
 
