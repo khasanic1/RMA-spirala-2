@@ -1,68 +1,100 @@
 package ba.etf.rma21.projekat
 
-import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
+import android.transition.Fade
+import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import ba.etf.rma21.projekat.data.viewmodel.KvizViewModel
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import ba.etf.rma21.projekat.data.fragmenti.FragmentKvizovi
+import ba.etf.rma21.projekat.data.fragmenti.FragmentPokusaj
+import ba.etf.rma21.projekat.data.fragmenti.FragmentPredmeti
 import com.example.cinaeste.view.KvizAdapter
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(){
 
-    private lateinit var kvizovi: RecyclerView
-    private lateinit var spinner: Spinner
-    private lateinit var kvizoviAdapter: KvizAdapter
-    private lateinit var upisDugme: FloatingActionButton
-    private var kvizViewModel = KvizViewModel()
+
+
+    private lateinit var bottomNavigation: BottomNavigationView
+
+    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        when (item.itemId) {
+            R.id.kvizovi -> {
+                val kvizoviFragment = FragmentKvizovi.newInstance()
+                openFragment(kvizoviFragment)
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.predmeti -> {
+                val upisFragment = FragmentPredmeti.newInstance()
+                openFragment(upisFragment)
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.predajKviz -> {
+                bottomNavigation.getMenu().findItem(R.id.predajKviz).setVisible(false);
+                bottomNavigation.getMenu().findItem(R.id.zaustaviKviz).setVisible(false);
+
+                bottomNavigation.getMenu().findItem(R.id.kvizovi).setVisible(true);
+                bottomNavigation.getMenu().findItem(R.id.predmeti).setVisible(true);
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.zaustaviKviz -> {
+                bottomNavigation.getMenu().findItem(R.id.predajKviz).setVisible(false);
+                bottomNavigation.getMenu().findItem(R.id.zaustaviKviz).setVisible(false);
+
+                bottomNavigation.getMenu().findItem(R.id.kvizovi).setVisible(true);
+                bottomNavigation.getMenu().findItem(R.id.predmeti).setVisible(true);
+                return@OnNavigationItemSelectedListener true
+            }
+        }
+        false
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        with(window) {
+            requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
+
+            // set an exit transition
+            sharedElementExitTransition = Fade()
+            exitTransition = Fade()
+        }
         setContentView(R.layout.activity_main)
-        kvizovi = findViewById(R.id.listaKvizova)
-        kvizovi.layoutManager = GridLayoutManager(this, 2)
-        kvizoviAdapter = KvizAdapter(arrayListOf())
-        kvizovi.adapter = kvizoviAdapter
-        kvizoviAdapter.updateKvizovi(kvizViewModel.getAll())
 
-        upisDugme = findViewById(R.id.upisDugme)
-        upisDugme.setOnClickListener{
-            val intent = Intent(this, UpisPredmet::class.java)
-            startActivity(intent)
-        }
-        spinner = findViewById(R.id.filterKvizova)
-        val opcije = listOf("Svi moji kvizovi", "Svi kvizovi", "Urađeni kvizovi", "Budući kvizovi", "Prošli kvizovi")
-        spinner.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, opcije)
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-            override fun onNothingSelected(parent: AdapterView<*>?) {
+        bottomNavigation= findViewById(R.id.bottomNav)
+        bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        bottomNavigation.selectedItemId= R.id.kvizovi
+        bottomNavigation.getMenu().findItem(R.id.predajKviz).setVisible(false);
+        bottomNavigation.getMenu().findItem(R.id.zaustaviKviz).setVisible(false);
+        openFragment(FragmentKvizovi.newInstance())
 
-            }
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if(position==0){
-                    kvizoviAdapter.updateKvizovi(kvizViewModel.getMyKvizes())
-                }else if(position==1){
-                    kvizoviAdapter.updateKvizovi(kvizViewModel.getAll())
-                }else if(position==2){
-                    kvizoviAdapter.updateKvizovi(kvizViewModel.getDone())
-                }else if(position==3){
-                    kvizoviAdapter.updateKvizovi(kvizViewModel.getFuture())
-                }else if(position==4){
-                    kvizoviAdapter.updateKvizovi(kvizViewModel.getNotTaken())
-                }
-            }
-        }
+
+    }
+
+    private fun openFragment(fragment: Fragment) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.container, fragment)
+        transaction.addToBackStack(null)
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+        transaction.commit()
     }
 
     override fun onResume() {
         super.onResume()
-        kvizoviAdapter.updateKvizovi(kvizViewModel.getMyKvizes())
+
     }
+
+    override fun onBackPressed() {
+        if(bottomNavigation.selectedItemId != R.id.kvizovi){
+            val kvizoviFragment = FragmentKvizovi.newInstance()
+            openFragment(kvizoviFragment)
+            bottomNavigation.setSelectedItemId(R.id.kvizovi)
+        }
+    }
+
+
+
 
 }
 
