@@ -7,7 +7,9 @@ import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import ba.etf.rma21.projekat.data.datum
 import ba.etf.rma21.projekat.data.fragmenti.*
+import ba.etf.rma21.projekat.data.models.Kviz
 import ba.etf.rma21.projekat.data.models.KvizInfo
 import ba.etf.rma21.projekat.data.repositories.KorisnikRepository
 import ba.etf.rma21.projekat.data.repositories.KorisnikRepository.Companion.dajKvizSaNazivom
@@ -44,6 +46,7 @@ class MainActivity : AppCompatActivity(){
                 trenutniKvizInfo.predan=true;
                 trenutniKvizInfo.zaustavljen=false;
                 poruka = trenutniKvizInfo.naziv
+
 
                 KorisnikRepository.informacije.add(trenutniKvizInfo)
                 if(dajKvizSaNazivom(trenutniKvizInfo.naziv).naziv!=""){

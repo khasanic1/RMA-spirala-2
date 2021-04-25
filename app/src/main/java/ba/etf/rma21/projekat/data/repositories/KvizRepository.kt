@@ -13,9 +13,10 @@ class KvizRepository {
         fun getMyKvizes(): List<Kviz> {
             var lista = mutableListOf<Kviz>()
             var brojac = 0
-            while(brojac < korisnik.predmeti.size){
+            // TODO: 4/25/2021 ne valja korisnik upisaniKvizovi size
+            while(brojac < korisnik.upisaniKvizovi.size){
                 for(K in getAll()){
-                    if(K.nazivPredmeta== korisnik.predmeti[brojac] && K.nazivGrupe == korisnik.grupe[brojac]){
+                    if(K.nazivPredmeta== korisnik.upisaniKvizovi[brojac].nazivPredmeta && K.nazivGrupe == korisnik.upisaniKvizovi[brojac].nazivGrupe){
                         lista.add(K)
                     }
                 }

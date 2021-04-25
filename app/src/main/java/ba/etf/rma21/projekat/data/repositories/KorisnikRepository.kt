@@ -15,7 +15,7 @@ class KorisnikRepository {
         var odabranaGrupa=0
         var porukaPredmet=""
         var porukaGrupa=""
-        var procenat = 0f
+        var procenat :Double = 0.0
 
         fun dajProcenat(naziv : String, pitanja : List<Pitanje>){
             var kviz = dajKvizSaNazivom(naziv)
@@ -27,7 +27,7 @@ class KorisnikRepository {
                 }
                 brojac++
             }
-            procenat= (brojTacnih.toFloat()/pitanja.size)*100
+            procenat= ((brojTacnih.toDouble()/pitanja.size)*100)
         }
 
         fun dajKvizSaNazivom(naziv:String) : KvizInfo{

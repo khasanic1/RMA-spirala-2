@@ -7,7 +7,13 @@ import java.util.*
 
 
 fun korisnik(): Korisnik {
-    return Korisnik(0,mutableListOf("Inženjerska matematika 1"), mutableListOf("RI1-2"))
+    return Korisnik(0,mutableListOf(Kviz(
+        "Kviz 2",
+        "Inženjerska matematika 1",
+        datum(10,4,2021),
+        datum(20,4,2022),null,
+        2,"RI1-2", null
+    )))
 
 }
 
