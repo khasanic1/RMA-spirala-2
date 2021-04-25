@@ -2,12 +2,23 @@ package ba.etf.rma21.projekat.data.repositories
 
 import ba.etf.rma21.projekat.data.models.Pitanje
 import ba.etf.rma21.projekat.data.pitanja
+import ba.etf.rma21.projekat.data.pitanjaKviz
 
 class PitanjeKvizRepository {
     companion object{
         fun getPitanja(nazivKviza:String,nazivPredmeta:String):List<Pitanje>{
-            return pitanja()
-            //return listOf(Pitanje("p1","Tačan odgovor je b", listOf("a","b","c"),1), Pitanje("p2","Tačan odgovor je c", listOf("a","b","c"),2))
+
+            var pitanjaPoKvizu = mutableListOf<Pitanje>()
+            for(pk in pitanjaKviz()){
+                if(nazivKviza==pk.kviz){
+                    for(p in pitanja()){
+                        if(p.naziv==pk.naziv){
+                            pitanjaPoKvizu.add(p)
+                        }
+                    }
+                }
+            }
+            return pitanjaPoKvizu
         }
     }
 }

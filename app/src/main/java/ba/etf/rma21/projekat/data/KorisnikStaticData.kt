@@ -7,7 +7,7 @@ import java.util.*
 
 
 fun korisnik(): Korisnik {
-    return Korisnik(0,mutableListOf("Razvoj mobilnih aplikacija"), mutableListOf("RI2-1"))
+    return Korisnik(0,mutableListOf("Inženjerska matematika 1"), mutableListOf("RI1-2"))
 
 }
 
