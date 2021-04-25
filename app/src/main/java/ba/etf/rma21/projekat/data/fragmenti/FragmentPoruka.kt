@@ -21,17 +21,17 @@ class FragmentPoruka : Fragment() {
     }
     private lateinit var poruka : TextView
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var view = inflater.inflate(R.layout.poruka_fragment, container, false)
+        val view = inflater.inflate(R.layout.poruka_fragment, container, false)
         poruka = view.findViewById(R.id.tvPoruka)
         var prikaz : String
         if(MainActivity.daLiJePredan == true){
-            prikaz = "Završili ste kviz "+ MainActivity.poruka+" sa tačnosti "+ format()
+            prikaz = "Završili ste kviz "+ MainActivity.poruka+" sa tačnosti "+ procenat
             MainActivity.daLiJePredan = false
         }else{
             prikaz = "Uspješno ste upisani u grupu " + porukaGrupa + " predmeta " + porukaPredmet+"!"
         }
         poruka = view.findViewById(R.id.tvPoruka)
         poruka.setText(prikaz)
-        return view;
+        return view
     }
 }
