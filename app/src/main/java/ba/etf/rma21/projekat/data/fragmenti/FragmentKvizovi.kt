@@ -39,13 +39,12 @@ class FragmentKvizovi : Fragment(), KvizAdapter.OnItemClickListener {
     private var pitanjeViewModel = PitanjeViewModel()
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var view =  inflater.inflate(R.layout.kvizovi_fragment, container, false)
+        var view = inflater.inflate(R.layout.kvizovi_fragment, container, false)
         kvizovi = view.findViewById(R.id.listaKvizova)
         kvizovi.layoutManager = GridLayoutManager(activity, 2)
         kvizoviAdapter = KvizAdapter(arrayListOf(), this)
@@ -61,25 +60,26 @@ class FragmentKvizovi : Fragment(), KvizAdapter.OnItemClickListener {
             "Prošli kvizovi"
         )
         spinner.adapter = ArrayAdapter(kvizovi.context, android.R.layout.simple_list_item_1, opcije)
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
+
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
                 id: Long
             ) {
-                if(position==0){
+                if (position == 0) {
                     kvizoviAdapter.updateKvizovi(kvizViewModel.getMyKvizes())
-                }else if(position==1){
+                } else if (position == 1) {
                     kvizoviAdapter.updateKvizovi(kvizViewModel.getAll())
-                }else if(position==2){
+                } else if (position == 2) {
                     kvizoviAdapter.updateKvizovi(kvizViewModel.getDone())
-                }else if(position==3){
+                } else if (position == 3) {
                     kvizoviAdapter.updateKvizovi(kvizViewModel.getFuture())
-                }else if(position==4){
+                } else if (position == 4) {
                     kvizoviAdapter.updateKvizovi(kvizViewModel.getNotTaken())
                 }
             }
@@ -89,49 +89,55 @@ class FragmentKvizovi : Fragment(), KvizAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(position: Int) {
-        var selekcijaSpinnera : Int = spinner.selectedItemPosition
+        var selekcijaSpinnera: Int = spinner.selectedItemPosition
         var listaKvizova = listOf<Kviz>()
-        if(selekcijaSpinnera==0){
+        if (selekcijaSpinnera == 0) {
             listaKvizova = kvizViewModel.getMyKvizes()
-        }else if(selekcijaSpinnera==1){
+        } else if (selekcijaSpinnera == 1) {
             listaKvizova = kvizViewModel.getAll()
-        }else if(selekcijaSpinnera==2){
+        } else if (selekcijaSpinnera == 2) {
             listaKvizova = kvizViewModel.getDone()
-        }else if(selekcijaSpinnera==3){
+        } else if (selekcijaSpinnera == 3) {
             listaKvizova = kvizViewModel.getFuture()
-        }else if(selekcijaSpinnera==4){
+        } else if (selekcijaSpinnera == 4) {
             listaKvizova = kvizViewModel.getNotTaken()
         }
 
 
         MainActivity.nazivOtvorenogKviza = listaKvizova[position].naziv
-        var smijeSeOtvoriti=false
-        crveniUpisan=false
-        for(k in kvizViewModel.getAll()){
-            if(k.naziv==MainActivity.nazivOtvorenogKviza){
-                if(k.datumRada!=null || (k.datumRada==null && k.datumPocetka.before(Calendar.getInstance().time) && k.datumKraj.after(Calendar.getInstance().time)) ) {
+        var smijeSeOtvoriti = false
+        crveniUpisan = false
+        for (k in kvizViewModel.getAll()) {
+            if (k.naziv == MainActivity.nazivOtvorenogKviza) {
+                if (k.datumRada != null || (k.datumRada == null && k.datumPocetka.before(Calendar.getInstance().time) && k.datumKraj.after(
+                        Calendar.getInstance().time
+                    ))
+                ) {
                     //zeleni i plavi
-                    for(uk in KorisnikRepository.korisnik.upisaniKvizovi){
-                        if(uk.naziv==nazivOtvorenogKviza){
+                    for (uk in KorisnikRepository.korisnik.upisaniKvizovi) {
+                        if (uk.naziv == nazivOtvorenogKviza) {
                             //zeleni i plavi upisan
-                            smijeSeOtvoriti=true
+                            smijeSeOtvoriti = true
                         }
                     }
-                }else{
-                    if(k.datumRada==null && k.datumPocetka.after(Calendar.getInstance().time)){
+                } else {
+                    if (k.datumRada == null && k.datumPocetka.after(Calendar.getInstance().time)) {
                         //zuti
-                        for(uk in KorisnikRepository.korisnik.upisaniKvizovi){
-                            if(uk.naziv==nazivOtvorenogKviza){
-                                smijeSeOtvoriti=false
+                        for (uk in KorisnikRepository.korisnik.upisaniKvizovi) {
+                            if (uk.naziv == nazivOtvorenogKviza) {
+                                smijeSeOtvoriti = false
                             }
                         }
-                    }else if(k.datumRada==null && k.datumPocetka.before(Calendar.getInstance().time) && k.datumKraj.before(Calendar.getInstance().time)){
+                    } else if (k.datumRada == null && k.datumPocetka.before(Calendar.getInstance().time) && k.datumKraj.before(
+                            Calendar.getInstance().time
+                        )
+                    ) {
                         //crveni
-                        for(uk in KorisnikRepository.korisnik.upisaniKvizovi){
-                            if(uk.naziv==nazivOtvorenogKviza){
+                        for (uk in KorisnikRepository.korisnik.upisaniKvizovi) {
+                            if (uk.naziv == nazivOtvorenogKviza) {
                                 //crveni upisan
-                                smijeSeOtvoriti=true
-                                crveniUpisan=true
+                                smijeSeOtvoriti = true
+                                crveniUpisan = true
                             }
                         }
 
@@ -139,54 +145,69 @@ class FragmentKvizovi : Fragment(), KvizAdapter.OnItemClickListener {
                 }
             }
         }
-        if(smijeSeOtvoriti){
-            if(crveniUpisan){
-
+        if (smijeSeOtvoriti) {
+            if (crveniUpisan) {
                 val transaction = activity!!.supportFragmentManager.beginTransaction()
-                transaction.replace(R.id.container, FragmentPokusaj.newInstance(pitanjeViewModel.getPitanja("ProsoKvizPitanja",listaKvizova[position].nazivPredmeta)))
+                transaction.replace(
+                    R.id.container,
+                    FragmentPokusaj.newInstance(
+                        pitanjeViewModel.getPitanja(
+                            "ProsoKvizPitanja",
+                            listaKvizova[position].nazivPredmeta
+                        )
+                    )
+                )
                 transaction.addToBackStack(null)
                 transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 transaction.commit()
-            }else{
+            } else {
 
                 val transaction = activity!!.supportFragmentManager.beginTransaction()
-                transaction.replace(R.id.container, FragmentPokusaj.newInstance(pitanjeViewModel.getPitanja(listaKvizova[position].naziv,listaKvizova[position].nazivPredmeta)))
+                transaction.replace(
+                    R.id.container,
+                    FragmentPokusaj.newInstance(
+                        pitanjeViewModel.getPitanja(
+                            listaKvizova[position].naziv,
+                            listaKvizova[position].nazivPredmeta
+                        )
+                    )
+                )
                 transaction.addToBackStack(null)
                 transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 transaction.commit()
             }
 
-            MainActivity.trenutniKvizInfo.naziv=listaKvizova[position].naziv
-            MainActivity.trenutniKvizInfo.nazivPredmeta=listaKvizova[position].nazivPredmeta
+            MainActivity.trenutniKvizInfo.naziv = listaKvizova[position].naziv
+            MainActivity.trenutniKvizInfo.nazivPredmeta = listaKvizova[position].nazivPredmeta
 
             var kviz = dajKvizSaNazivom(MainActivity.trenutniKvizInfo.naziv)
             val navBar: BottomNavigationView = activity!!.findViewById(R.id.bottomNav)
-            if(kviz.predan || crveniUpisan==true){
+            if (kviz.predan || crveniUpisan == true) {
 
-                poruka=MainActivity.trenutniKvizInfo.naziv
-                MainActivity.trenutniKvizInfo.predan=true
-                MainActivity.trenutniKvizInfo.zaustavljen=false
+                poruka = MainActivity.trenutniKvizInfo.naziv
+                MainActivity.trenutniKvizInfo.predan = true
+                MainActivity.trenutniKvizInfo.zaustavljen = false
                 navBar.getMenu().findItem(R.id.kvizovi).setVisible(true)
                 navBar.getMenu().findItem(R.id.predmeti).setVisible(true)
                 navBar.getMenu().findItem(R.id.predajKviz).setVisible(false)
                 navBar.getMenu().findItem(R.id.zaustaviKviz).setVisible(false)
-            }else if(kviz.zaustavljen){
-                poruka=MainActivity.trenutniKvizInfo.naziv
-                MainActivity.trenutniKvizInfo.predan=false
-                MainActivity.trenutniKvizInfo.zaustavljen=true
+            } else if (kviz.zaustavljen) {
+                poruka = MainActivity.trenutniKvizInfo.naziv
+                MainActivity.trenutniKvizInfo.predan = false
+                MainActivity.trenutniKvizInfo.zaustavljen = true
                 navBar.getMenu().findItem(R.id.kvizovi).setVisible(false)
                 navBar.getMenu().findItem(R.id.predmeti).setVisible(false)
                 navBar.getMenu().findItem(R.id.predajKviz).setVisible(true)
                 navBar.getMenu().findItem(R.id.zaustaviKviz).setVisible(true)
-            }else{
-                MainActivity.trenutniKvizInfo.predan=false
-                MainActivity.trenutniKvizInfo.zaustavljen=false
+            } else {
+                MainActivity.trenutniKvizInfo.predan = false
+                MainActivity.trenutniKvizInfo.zaustavljen = false
                 navBar.getMenu().findItem(R.id.kvizovi).setVisible(false)
                 navBar.getMenu().findItem(R.id.predmeti).setVisible(false)
                 navBar.getMenu().findItem(R.id.predajKviz).setVisible(true)
                 navBar.getMenu().findItem(R.id.zaustaviKviz).setVisible(true)
             }
-        }else{
+        } else {
 
         }
 

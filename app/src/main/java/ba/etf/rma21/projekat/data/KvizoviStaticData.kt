@@ -18,7 +18,7 @@ fun kvizovi(): List<Kviz> {
                     "Inženjerska matematika 1",
                     datum(10,4,2021),
                     datum(20,4,2022),
-                    datum(13,4,2021),
+                    null,
                     2,"RI1-1", 1.5f
                     ),
             Kviz(
@@ -33,8 +33,8 @@ fun kvizovi(): List<Kviz> {
                     "Inženjerska fizika 1",
                     datum(10,4,2021),
                     datum(20,4,2022),
-                    datum(13,4,2021),
-                    2,"RI1-1", 1.5f
+                    null,
+                    2,"RI1-1", null
             ),
             Kviz(
                     "Kviz 4",
@@ -48,8 +48,8 @@ fun kvizovi(): List<Kviz> {
                     "Osnove elektrotehnike",
                     datum(10,4,2021),
                     datum(20,4,2022),
-                    datum(13,4,2021),
-                    2,"RI1-1", 1.5f
+                    null,
+                    2,"RI1-1", null
             ),
             Kviz(
                     "Kviz 6",
@@ -63,8 +63,8 @@ fun kvizovi(): List<Kviz> {
                     "Uvod u programiranje",
                     datum(10,4,2021),
                     datum(20,4,2022),
-                    datum(13,4,2021),
-                    2,"RI1-1", 1.5f
+                    null,
+                    2,"RI1-1", null
             ),
             Kviz(
                     "Kviz 8",
@@ -78,7 +78,7 @@ fun kvizovi(): List<Kviz> {
                     "Logički dizajn",
                     datum(10,4,2021),
                     datum(20,4,2022),
-                    datum(16,4,2021),
+                    null,
                     2,"RI2-1", null
             ),
             Kviz(
@@ -94,7 +94,7 @@ fun kvizovi(): List<Kviz> {
                     "Sistemsko programiranje",
                     datum(10,4,2021),
                     datum(20,4,2022),
-                    datum(16,4,2021),
+                    null,
                     23,"RI2-1", null
             ),
             Kviz(
@@ -118,16 +118,16 @@ fun kvizovi(): List<Kviz> {
                     "Razvoj mobilnih aplikacija",
                     datum(10,4,2021),
                     datum(20,4,2022),
-                    datum(15,4,2021),
-                    22,"RI2-2", 15.5f
+                    null,
+                    22,"RI2-2", null
             ),
             Kviz(
                     "Kviz 15",
                     "Web tehnologije",
                     datum(10,4,2021),
                     datum(20,4,2022),
-                    datum(15,4,2021),
-                    32,"RI3-1", 15.5f
+                    null,
+                    32,"RI3-1", null
             ),
             Kviz(
                     "Kviz 16",
@@ -142,8 +142,8 @@ fun kvizovi(): List<Kviz> {
                     "Računarska grafika",
                     datum(10,4,2021),
                     datum(20,4,2022),
-                    datum(15,4,2021),
-                    32,"RI3-1", 15.5f
+                    null,
+                    32,"RI3-1", null
             ),
             Kviz(
                     "Kviz 18",
@@ -190,8 +190,8 @@ fun kvizovi(): List<Kviz> {
                     "Mašinsko učenje",
                     datum(10,4,2021),
                     datum(17,4,2022),
-                    datum(10,4,2021),
-                    7,"RI4-1", 15f
+                    null,
+                    7,"RI4-1", null
             ),
             Kviz(
                     "Kviz 24",
@@ -206,8 +206,8 @@ fun kvizovi(): List<Kviz> {
                     "Baze podataka",
                     datum(10,4,2021),
                     datum(17,4,2022),
-                    datum(11,4,2021),
-                    58,"RI4-1", 20f
+                    null,
+                    58,"RI4-1", null
             ),
             Kviz(
                     "Kviz 26",
@@ -238,8 +238,8 @@ fun kvizovi(): List<Kviz> {
                     "Tehnologije sigurnosti",
                     datum(10,4,2021),
                     datum(17,4,2022),
-                    datum(10,4,2021),
-                    7,"RI5-1", 15f
+                    null,
+                    7,"RI5-1", null
             ),
             Kviz(
                     "Kviz 30",
@@ -254,8 +254,8 @@ fun kvizovi(): List<Kviz> {
                     "Data mining",
                     datum(10,4,2021),
                     datum(17,4,2022),
-                    datum(11,4,2021),
-                    58,"RI5-1", 20f
+                    null,
+                    58,"RI5-1", null
             ),
             Kviz(
                     "Kviz 32",

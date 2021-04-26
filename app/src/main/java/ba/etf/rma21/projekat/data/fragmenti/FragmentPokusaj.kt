@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -120,7 +121,12 @@ class FragmentPokusaj(pitanja: List<Pitanje>) : Fragment(){
                 }
                 brojac++
             }
-
+            trenutnoPitanje=0
+            val transaction = activity!!.supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.framePitanje, FragmentPitanje.newInstance(pitanja[0]))
+            transaction.addToBackStack(null)
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            transaction.commit()
 
         }else{
             for(P in pitanja){
@@ -128,6 +134,12 @@ class FragmentPokusaj(pitanja: List<Pitanje>) : Fragment(){
                 listaOdgovorenihPitanja.add(0)
                 MainActivity.trenutniKvizInfo.listaOdgovora.add(Pair(P.naziv,0))
             }
+            trenutnoPitanje=0
+            val transaction = activity!!.supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.framePitanje, FragmentPitanje.newInstance(pitanja[0]))
+            transaction.addToBackStack(null)
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            transaction.commit()
         }
 
         lista.setNavigationItemSelectedListener{ menuItem ->

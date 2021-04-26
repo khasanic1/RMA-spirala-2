@@ -40,6 +40,7 @@ class KvizRepository {
                         var novi = kviz
 
                         novi.datumRada= datum(13,4,2021)
+                        novi.osvojeniBodovi=42069f
                         lista.add(novi)
                     }else{
 
