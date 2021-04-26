@@ -10,7 +10,6 @@ class PredmetRepository {
     companion object {
         fun getUpisani(): List<Predmet> {
             var korisnik_predmeti : MutableList<String> = mutableListOf()
-            // TODO: 4/25/2021 mozda imaju 2 kviza sa istim predmetom razlicitom grupom
             for(kviz in korisnik.upisaniKvizovi){
                 korisnik_predmeti.add(kviz.nazivPredmeta)
             }

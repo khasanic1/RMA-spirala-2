@@ -34,7 +34,9 @@ fun pitanjaKviz(): List<PitanjeKviz>{
                 PitanjeKviz("Planet", "Kviz 4"),
                 PitanjeKviz("Goat", "Kviz 4"),
                 PitanjeKviz("Eurovision", "Kviz 4"),
-                PitanjeKviz("Marathon", "Kviz 4")
+                PitanjeKviz("Marathon", "Kviz 4"),
+
+                PitanjeKviz("Champagne", "ProsoKvizPitanja")
 
 
 

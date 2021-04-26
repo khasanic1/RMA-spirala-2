@@ -4,7 +4,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +16,7 @@ import ba.etf.rma21.projekat.MainActivity
 import ba.etf.rma21.projekat.MainActivity.Companion.nazivOtvorenogKviza
 import ba.etf.rma21.projekat.R
 import ba.etf.rma21.projekat.data.models.Pitanje
+import ba.etf.rma21.projekat.data.repositories.KorisnikRepository.Companion.crveniUpisan
 import ba.etf.rma21.projekat.data.repositories.KorisnikRepository.Companion.dajKvizSaNazivom
 import ba.etf.rma21.projekat.data.repositories.KorisnikRepository.Companion.dajProcenat
 import ba.etf.rma21.projekat.data.repositories.KorisnikRepository.Companion.informacije
@@ -54,12 +54,11 @@ class FragmentPokusaj(pitanja: List<Pitanje>) : Fragment(){
         var daLiJeZaustavljen : Boolean = zaustavljen()
 
 
-        if(daLiJePredan){
+        if(daLiJePredan || crveniUpisan==true){
             for(P in pitanja){
                 lista.menu.add(R.id.lista_nav, itemId++, order++, (brojPitanja++).toString())
             }
-            Log.d("keno", "uslo u predan pokusaj")
-            MainActivity.daLiJePredan =true
+            MainActivity.daLiOtvaraProcenat =true
             lista.menu.add(R.id.lista_nav, itemId++, order++, "Rezultat")
             val transaction = activity!!.supportFragmentManager.beginTransaction()
             transaction.replace(R.id.framePitanje, FragmentPoruka.newInstance())
@@ -70,24 +69,30 @@ class FragmentPokusaj(pitanja: List<Pitanje>) : Fragment(){
             var listaOdg : MutableList<Pair<String, Int>> = mutableListOf()
             var kviz= dajKvizSaNazivom(nazivOtvorenogKviza)
             listaOdg=kviz.listaOdgovora
-
-
-            var brojac=0
-            while(brojac<pitanja.size){
-                if (listaOdg[brojac].second-1 == pitanja[brojac].tacan) {
-                    val obojena = SpannableString(lista.menu.getItem(brojac).title)
-                    obojena.setSpan(ForegroundColorSpan(Color.parseColor("#3DDC84")), 0, obojena.length, 0)
-                    lista.menu.getItem(brojac).title = obojena
-                } else {
-                    val obojena = SpannableString(lista.menu.getItem(brojac).title)
-                    obojena.setSpan(ForegroundColorSpan(Color.parseColor("#DB4F3D")), 0, obojena.length, 0)
-                    lista.menu.getItem(brojac).title = obojena
+            if(!crveniUpisan){
+                var brojac=0
+                while(brojac<pitanja.size){
+                    if (listaOdg[brojac].second-1 == pitanja[brojac].tacan) {
+                        val obojena = SpannableString(lista.menu.getItem(brojac).title)
+                        obojena.setSpan(ForegroundColorSpan(Color.parseColor("#3DDC84")), 0, obojena.length, 0)
+                        lista.menu.getItem(brojac).title = obojena
+                    } else {
+                        val obojena = SpannableString(lista.menu.getItem(brojac).title)
+                        obojena.setSpan(ForegroundColorSpan(Color.parseColor("#DB4F3D")), 0, obojena.length, 0)
+                        lista.menu.getItem(brojac).title = obojena
+                    }
+                    brojac++
                 }
-                brojac++
+                dajProcenat(nazivOtvorenogKviza,pitanja)
+            }else{
+
+                val obojena = SpannableString(lista.menu.getItem(0).title)
+                obojena.setSpan(ForegroundColorSpan(Color.parseColor("#DB4F3D")), 0, obojena.length, 0)
+                lista.menu.getItem(0).title = obojena
             }
-            dajProcenat(nazivOtvorenogKviza,pitanja)
+
+
         }else if(daLiJeZaustavljen){
-            Log.d("keno", "uslo u zaustavljen pokusaj")
             var listaOdg : MutableList<Pair<String, Int>> = mutableListOf()
             var kviz= dajKvizSaNazivom(nazivOtvorenogKviza)
             if(kviz.naziv!=""){
@@ -127,7 +132,7 @@ class FragmentPokusaj(pitanja: List<Pitanje>) : Fragment(){
 
         lista.setNavigationItemSelectedListener{ menuItem ->
             if(menuItem.toString()=="Rezultat"){
-                MainActivity.daLiJePredan = true
+                MainActivity.daLiOtvaraProcenat = true
                 val transaction = activity!!.supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.framePitanje, FragmentPoruka.newInstance())
                 transaction.addToBackStack(null)
@@ -146,7 +151,7 @@ class FragmentPokusaj(pitanja: List<Pitanje>) : Fragment(){
             true
 
         }
-        return view;
+        return view
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -173,29 +178,25 @@ class FragmentPokusaj(pitanja: List<Pitanje>) : Fragment(){
     }
 
     private fun predan() : Boolean{
-
         for(kvizInfo in informacije){
-            if(kvizInfo.naziv == MainActivity.nazivOtvorenogKviza){
+            if(kvizInfo.naziv == nazivOtvorenogKviza){
                 if(kvizInfo.predan){
                     return true
                 }
             }
         }
         return false
-
     }
 
     private fun zaustavljen() : Boolean{
-
         for(kvizInfo in informacije){
-            if(kvizInfo.naziv == MainActivity.nazivOtvorenogKviza){
+            if(kvizInfo.naziv == nazivOtvorenogKviza){
                 if(kvizInfo.zaustavljen){
                     return true
                 }
             }
         }
         return false
-
     }
 
 

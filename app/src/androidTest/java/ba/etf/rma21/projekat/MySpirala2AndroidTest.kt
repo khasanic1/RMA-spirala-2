@@ -29,6 +29,10 @@ class MySpirala2AndroidTest {
 
     @Test
     fun mojTest1() {
+
+    }
+
+    fun mojTest2() {
         val kvizovi = KvizRepository.getAll()
         onView(withId(R.id.filterKvizova)).perform(ViewActions.click())
         Espresso.onData(CoreMatchers.allOf(CoreMatchers.`is`(CoreMatchers.instanceOf(String::class.java)),
@@ -52,23 +56,5 @@ class MySpirala2AndroidTest {
             RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(CoreMatchers.allOf(hasDescendant(withText(kvizovi[1].naziv)),
                 hasDescendant(withText(kvizovi[1].nazivPredmeta))), click()))
         onView(withId(R.id.predajKviz)).perform(click())
-
     }
-
-    /*fun mojTest2() {
-        onView(withId(R.id.filterKvizova)).perform(click())
-        Espresso.onData(CoreMatchers.allOf(CoreMatchers.`is`(CoreMatchers.instanceOf(String::class.java)), CoreMatchers.`is`("Svi moji kvizovi"))).perform(click())
-        val kvizovi = KvizRepository.getMyKvizes()
-        onView(withId(R.id.listaKvizova)).perform(RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(CoreMatchers.allOf(hasDescendant(withText(kvizovi[0].naziv)),
-            hasDescendant(withText(kvizovi[0].nazivPredmeta))), click()))
-        onView(withId(R.id.navigacijaPitanja)).check(matches(isDisplayed()))
-        onView(withId(R.id.navigacijaPitanja)).check(matches(isDisplayed()))
-        val pitanja = PitanjeKvizRepository.getPitanja(kvizovi[0].naziv, kvizovi[0].nazivPredmeta)
-        var indeks = 0
-        for (pitanje in pitanja) {
-            onView(withId(R.id.navigacijaPitanja)).perform(NavigationViewActions.navigateTo(indeks))
-            onView(withId(R.id.tekstPitanja)).check(matches(withText(pitanja[indeks].tekst)))
-            indeks++
-        }
-    }*/
 }

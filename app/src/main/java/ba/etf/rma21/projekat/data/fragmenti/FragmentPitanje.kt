@@ -2,7 +2,6 @@ package ba.etf.rma21.projekat.data.fragmenti
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +16,7 @@ import ba.etf.rma21.projekat.R
 import ba.etf.rma21.projekat.data.models.KvizInfo
 import ba.etf.rma21.projekat.data.models.Pitanje
 import ba.etf.rma21.projekat.data.repositories.KorisnikRepository
+import ba.etf.rma21.projekat.data.repositories.KorisnikRepository.Companion.crveniUpisan
 import ba.etf.rma21.projekat.data.repositories.PitanjeRepository.Companion.listaOdgovorenihPitanja
 import ba.etf.rma21.projekat.data.viewmodel.SharedViewModel
 
@@ -57,41 +57,39 @@ class FragmentPitanje(pitanje: Pitanje) : Fragment() {
             }
             pozicijaOdgovora++
         }
-        if(kvizPoredjenja.naziv!="" && kvizPoredjenja.predan==true){
+        if((kvizPoredjenja.naziv!="" && kvizPoredjenja.predan==true) || crveniUpisan==true){
 
-
-
-            Log.d("keno","uslo kad je predan pitanje " + pozicijaOdgovora.toString())
-            if(kvizPoredjenja.listaOdgovora[pozicijaOdgovora].second != 0){
-
-                Log.d("keno","uslo kad je predan pitanje odgovoren")
-                if((kvizPoredjenja.listaOdgovora[pozicijaOdgovora].second)-1 == pitanje.tacan){
-                    listaOdgovora.post{ (listaOdgovora.get(pitanje.tacan) as TextView).setTextColor(Color.parseColor("#3DDC84")) }
-                }else{
-                    //Log.d("keno","tacan je: "+listaOdgovora.get(pitanje.tacan) + " a stavljen je: "
-                           // +(kvizPoredjenja.listaOdgovora[pozicijaOdgovora].second-1).toString())
-                    listaOdgovora.post{(listaOdgovora.get(pitanje.tacan)  as TextView).setTextColor(Color.parseColor("#3DDC84"))}
-                    listaOdgovora.post{(listaOdgovora.get(kvizPoredjenja.listaOdgovora[pozicijaOdgovora].second-1) as TextView)
-                        .setTextColor(Color.parseColor("#DB4F3D"))}
-                }
+            if(crveniUpisan){
+                kvizPoredjenja.listaOdgovora.add(Pair("Champagne",0))
                 listaOdgovora.setEnabled(false);
+
             }else{
+                if(kvizPoredjenja.listaOdgovora[pozicijaOdgovora].second != 0){
 
-                Log.d("keno","uslo kad je predan pitanje nije odgovoren")
-                listaOdgovora.setEnabled(false);
+                    if((kvizPoredjenja.listaOdgovora[pozicijaOdgovora].second)-1 == pitanje.tacan){
+                        listaOdgovora.post{ (listaOdgovora.get(pitanje.tacan) as TextView).setTextColor(Color.parseColor("#3DDC84")) }
+                    }else{
+                        listaOdgovora.post{(listaOdgovora.get(pitanje.tacan)  as TextView).setTextColor(Color.parseColor("#3DDC84"))}
+                        listaOdgovora.post{(listaOdgovora.get(kvizPoredjenja.listaOdgovora[pozicijaOdgovora].second-1) as TextView)
+                            .setTextColor(Color.parseColor("#DB4F3D"))}
+                    }
+                    listaOdgovora.setEnabled(false);
+                }else{
+                    listaOdgovora.setEnabled(false);
+                }
             }
+
+
+
 
         }else if(kvizPoredjenja.naziv!="" && kvizPoredjenja.zaustavljen==true){
 
 
-            Log.d("keno","uslo kad je zaustavljen pitanje")
 
             if(kvizPoredjenja.listaOdgovora[pozicijaOdgovora].second != 0){
                 if((kvizPoredjenja.listaOdgovora[pozicijaOdgovora].second)-1 == pitanje.tacan){
                     listaOdgovora.post{ (listaOdgovora.get(pitanje.tacan) as TextView).setTextColor(Color.parseColor("#3DDC84")) }
                 }else{
-                    //Log.d("keno","tacan je: "+listaOdgovora.get(pitanje.tacan) + " a stavljen je: "
-                    // +(kvizPoredjenja.listaOdgovora[pozicijaOdgovora].second-1).toString())
                     listaOdgovora.post{(listaOdgovora.get(pitanje.tacan)  as TextView).setTextColor(Color.parseColor("#3DDC84"))}
                     listaOdgovora.post{(listaOdgovora.get(kvizPoredjenja.listaOdgovora[pozicijaOdgovora].second-1) as TextView)
                         .setTextColor(Color.parseColor("#DB4F3D"))}
@@ -109,8 +107,6 @@ class FragmentPitanje(pitanje: Pitanje) : Fragment() {
                 }
                 pozicijaOdgovora++
             }
-            Log.d("keno", "pozicija: " +pozicijaOdgovora.toString())
-            Log.d("keno","uslo kad je prvi put otvoren pitanje")
             if(trenutniKvizInfo.listaOdgovora[pozicijaOdgovora].second != 0){
                 if((trenutniKvizInfo.listaOdgovora[pozicijaOdgovora].second)-1 == pitanje.tacan){
                     listaOdgovora.post{ (listaOdgovora.get(pitanje.tacan) as TextView).setTextColor(Color.parseColor("#3DDC84")) }
@@ -125,7 +121,6 @@ class FragmentPitanje(pitanje: Pitanje) : Fragment() {
             }
         }
         listaOdgovora.setOnItemClickListener { parent: AdapterView<*>, view: View, position: Int, id ->
-            Log.d("keno1", (position+1).toString())
             MainActivity.trenutniKvizInfo.listaOdgovora[pozicijaOdgovora] = Pair(pitanje.naziv, position+1)
             if(position==pitanje.tacan){
                 (view as TextView).setTextColor(Color.parseColor("#3DDC84"))

@@ -1,7 +1,6 @@
 package ba.etf.rma21.projekat.data.fragmenti
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,15 +12,19 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ba.etf.rma21.projekat.MainActivity
+import ba.etf.rma21.projekat.MainActivity.Companion.nazivOtvorenogKviza
 import ba.etf.rma21.projekat.MainActivity.Companion.poruka
 import ba.etf.rma21.projekat.R
 import ba.etf.rma21.projekat.data.models.Kviz
 import ba.etf.rma21.projekat.data.repositories.KorisnikRepository
+import ba.etf.rma21.projekat.data.repositories.KorisnikRepository.Companion.crveniUpisan
 import ba.etf.rma21.projekat.data.repositories.KorisnikRepository.Companion.dajKvizSaNazivom
+import ba.etf.rma21.projekat.data.repositories.KvizRepository.Companion.getAll
 import ba.etf.rma21.projekat.data.viewmodel.KvizViewModel
 import ba.etf.rma21.projekat.data.viewmodel.PitanjeViewModel
 import com.example.cinaeste.view.KvizAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.util.*
 
 
 class FragmentKvizovi : Fragment(), KvizAdapter.OnItemClickListener {
@@ -82,7 +85,7 @@ class FragmentKvizovi : Fragment(), KvizAdapter.OnItemClickListener {
             }
         }
 
-        return view;
+        return view
     }
 
     override fun onItemClick(position: Int) {
@@ -99,46 +102,94 @@ class FragmentKvizovi : Fragment(), KvizAdapter.OnItemClickListener {
         }else if(selekcijaSpinnera==4){
             listaKvizova = kvizViewModel.getNotTaken()
         }
+
+
         MainActivity.nazivOtvorenogKviza = listaKvizova[position].naziv
-        val transaction = activity!!.supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.container, FragmentPokusaj.newInstance(pitanjeViewModel.getPitanja(listaKvizova[position].naziv,listaKvizova[position].nazivPredmeta)))
-        transaction.addToBackStack(null)
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-        transaction.commit()
+        var smijeSeOtvoriti=false
+        crveniUpisan=false
+        for(k in kvizViewModel.getAll()){
+            if(k.naziv==MainActivity.nazivOtvorenogKviza){
+                if(k.datumRada!=null || (k.datumRada==null && k.datumPocetka.before(Calendar.getInstance().time) && k.datumKraj.after(Calendar.getInstance().time)) ) {
+                    //zeleni i plavi
+                    for(uk in KorisnikRepository.korisnik.upisaniKvizovi){
+                        if(uk.naziv==nazivOtvorenogKviza){
+                            //zeleni i plavi upisan
+                            smijeSeOtvoriti=true
+                        }
+                    }
+                }else{
+                    if(k.datumRada==null && k.datumPocetka.after(Calendar.getInstance().time)){
+                        //zuti
+                        for(uk in KorisnikRepository.korisnik.upisaniKvizovi){
+                            if(uk.naziv==nazivOtvorenogKviza){
+                                smijeSeOtvoriti=false
+                            }
+                        }
+                    }else if(k.datumRada==null && k.datumPocetka.before(Calendar.getInstance().time) && k.datumKraj.before(Calendar.getInstance().time)){
+                        //crveni
+                        for(uk in KorisnikRepository.korisnik.upisaniKvizovi){
+                            if(uk.naziv==nazivOtvorenogKviza){
+                                //crveni upisan
+                                smijeSeOtvoriti=true
+                                crveniUpisan=true
+                            }
+                        }
 
-        MainActivity.trenutniKvizInfo.naziv=listaKvizova[position].naziv
-        MainActivity.trenutniKvizInfo.nazivPredmeta=listaKvizova[position].nazivPredmeta
-
-        var kviz = dajKvizSaNazivom(MainActivity.trenutniKvizInfo.naziv)
-        val navBar: BottomNavigationView = activity!!.findViewById(R.id.bottomNav)
-        if(kviz.predan){
-            Log.d("nadin","predan")
-            poruka=MainActivity.trenutniKvizInfo.naziv
-            MainActivity.trenutniKvizInfo.predan=true
-            MainActivity.trenutniKvizInfo.zaustavljen=false
-            navBar.getMenu().findItem(R.id.kvizovi).setVisible(true);
-            navBar.getMenu().findItem(R.id.predmeti).setVisible(true);
-            navBar.getMenu().findItem(R.id.predajKviz).setVisible(false);
-            navBar.getMenu().findItem(R.id.zaustaviKviz).setVisible(false);
-        }else if(kviz.zaustavljen){
-
-            poruka=MainActivity.trenutniKvizInfo.naziv
-            MainActivity.trenutniKvizInfo.predan=false
-            MainActivity.trenutniKvizInfo.zaustavljen=true
-            Log.d("nadin","zaustavljen")
-            navBar.getMenu().findItem(R.id.kvizovi).setVisible(false);
-            navBar.getMenu().findItem(R.id.predmeti).setVisible(false);
-            navBar.getMenu().findItem(R.id.predajKviz).setVisible(true);
-            navBar.getMenu().findItem(R.id.zaustaviKviz).setVisible(true);
-        }else{
-            MainActivity.trenutniKvizInfo.predan=false
-            MainActivity.trenutniKvizInfo.zaustavljen=false
-            Log.d("nadin","nijedno")
-            navBar.getMenu().findItem(R.id.kvizovi).setVisible(false);
-            navBar.getMenu().findItem(R.id.predmeti).setVisible(false);
-            navBar.getMenu().findItem(R.id.predajKviz).setVisible(true);
-            navBar.getMenu().findItem(R.id.zaustaviKviz).setVisible(true);
+                    }
+                }
+            }
         }
+        if(smijeSeOtvoriti){
+            if(crveniUpisan){
+
+                val transaction = activity!!.supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.container, FragmentPokusaj.newInstance(pitanjeViewModel.getPitanja("ProsoKvizPitanja",listaKvizova[position].nazivPredmeta)))
+                transaction.addToBackStack(null)
+                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                transaction.commit()
+            }else{
+
+                val transaction = activity!!.supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.container, FragmentPokusaj.newInstance(pitanjeViewModel.getPitanja(listaKvizova[position].naziv,listaKvizova[position].nazivPredmeta)))
+                transaction.addToBackStack(null)
+                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                transaction.commit()
+            }
+
+            MainActivity.trenutniKvizInfo.naziv=listaKvizova[position].naziv
+            MainActivity.trenutniKvizInfo.nazivPredmeta=listaKvizova[position].nazivPredmeta
+
+            var kviz = dajKvizSaNazivom(MainActivity.trenutniKvizInfo.naziv)
+            val navBar: BottomNavigationView = activity!!.findViewById(R.id.bottomNav)
+            if(kviz.predan || crveniUpisan==true){
+
+                poruka=MainActivity.trenutniKvizInfo.naziv
+                MainActivity.trenutniKvizInfo.predan=true
+                MainActivity.trenutniKvizInfo.zaustavljen=false
+                navBar.getMenu().findItem(R.id.kvizovi).setVisible(true)
+                navBar.getMenu().findItem(R.id.predmeti).setVisible(true)
+                navBar.getMenu().findItem(R.id.predajKviz).setVisible(false)
+                navBar.getMenu().findItem(R.id.zaustaviKviz).setVisible(false)
+            }else if(kviz.zaustavljen){
+                poruka=MainActivity.trenutniKvizInfo.naziv
+                MainActivity.trenutniKvizInfo.predan=false
+                MainActivity.trenutniKvizInfo.zaustavljen=true
+                navBar.getMenu().findItem(R.id.kvizovi).setVisible(false)
+                navBar.getMenu().findItem(R.id.predmeti).setVisible(false)
+                navBar.getMenu().findItem(R.id.predajKviz).setVisible(true)
+                navBar.getMenu().findItem(R.id.zaustaviKviz).setVisible(true)
+            }else{
+                MainActivity.trenutniKvizInfo.predan=false
+                MainActivity.trenutniKvizInfo.zaustavljen=false
+                navBar.getMenu().findItem(R.id.kvizovi).setVisible(false)
+                navBar.getMenu().findItem(R.id.predmeti).setVisible(false)
+                navBar.getMenu().findItem(R.id.predajKviz).setVisible(true)
+                navBar.getMenu().findItem(R.id.zaustaviKviz).setVisible(true)
+            }
+        }else{
+
+        }
+
     }
 
 

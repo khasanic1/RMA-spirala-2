@@ -16,6 +16,7 @@ class KorisnikRepository {
         var porukaPredmet=""
         var porukaGrupa=""
         var procenat :Double = 0.0
+        var crveniUpisan=false
 
         fun dajProcenat(naziv : String, pitanja : List<Pitanje>){
             var kviz = dajKvizSaNazivom(naziv)
@@ -36,7 +37,8 @@ class KorisnikRepository {
                     return Kviz
                 }
             }
-            return KvizInfo("","",false, false,mutableListOf())
+            var novi=KvizInfo("","",false, false,mutableListOf())
+            return novi
         }
     }
 

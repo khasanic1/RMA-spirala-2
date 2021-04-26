@@ -7,13 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import ba.etf.rma21.projekat.MainActivity
-import ba.etf.rma21.projekat.MainActivity.Companion.trenutniKvizInfo
 import ba.etf.rma21.projekat.R
-import ba.etf.rma21.projekat.data.repositories.KorisnikRepository.Companion.dajProcenat
+import ba.etf.rma21.projekat.data.repositories.KorisnikRepository.Companion.crveniUpisan
 import ba.etf.rma21.projekat.data.repositories.KorisnikRepository.Companion.porukaGrupa
 import ba.etf.rma21.projekat.data.repositories.KorisnikRepository.Companion.porukaPredmet
 import ba.etf.rma21.projekat.data.repositories.KorisnikRepository.Companion.procenat
-import java.lang.String.format
 
 class FragmentPoruka : Fragment() {
     companion object {
@@ -24,9 +22,16 @@ class FragmentPoruka : Fragment() {
         val view = inflater.inflate(R.layout.poruka_fragment, container, false)
         poruka = view.findViewById(R.id.tvPoruka)
         var prikaz : String
-        if(MainActivity.daLiJePredan == true){
-            prikaz = "Završili ste kviz "+ MainActivity.poruka+" sa tačnosti "+ procenat
-            MainActivity.daLiJePredan = false
+        if(MainActivity.daLiOtvaraProcenat == true){
+            if(crveniUpisan){
+
+                prikaz = "Završili ste kviz "+ MainActivity.poruka+" sa tačnosti 0.0"
+                MainActivity.daLiOtvaraProcenat = false
+            }else{
+
+                prikaz = "Završili ste kviz "+ MainActivity.poruka+" sa tačnosti "+ procenat
+                MainActivity.daLiOtvaraProcenat = false
+            }
         }else{
             prikaz = "Uspješno ste upisani u grupu " + porukaGrupa + " predmeta " + porukaPredmet+"!"
         }

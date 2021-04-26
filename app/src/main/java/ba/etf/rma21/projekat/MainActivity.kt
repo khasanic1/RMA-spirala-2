@@ -7,9 +7,7 @@ import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import ba.etf.rma21.projekat.data.datum
 import ba.etf.rma21.projekat.data.fragmenti.*
-import ba.etf.rma21.projekat.data.models.Kviz
 import ba.etf.rma21.projekat.data.models.KvizInfo
 import ba.etf.rma21.projekat.data.repositories.KorisnikRepository
 import ba.etf.rma21.projekat.data.repositories.KorisnikRepository.Companion.dajKvizSaNazivom
@@ -19,7 +17,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity(){
     companion object{
-        var daLiJePredan=false
+        var daLiOtvaraProcenat=false
         var trenutniKvizInfo : KvizInfo = KvizInfo("","",false,false, mutableListOf())
         var nazivOtvorenogKviza : String = ""
         var poruka : String = ""
@@ -42,13 +40,12 @@ class MainActivity : AppCompatActivity(){
                 return@OnNavigationItemSelectedListener true
             }
             R.id.predajKviz -> {
-                daLiJePredan=true
-                trenutniKvizInfo.predan=true;
-                trenutniKvizInfo.zaustavljen=false;
+                daLiOtvaraProcenat=true
+                trenutniKvizInfo.predan=true
+                trenutniKvizInfo.zaustavljen=false
                 poruka = trenutniKvizInfo.naziv
-
-
                 KorisnikRepository.informacije.add(trenutniKvizInfo)
+
                 if(dajKvizSaNazivom(trenutniKvizInfo.naziv).naziv!=""){
                     if(dajKvizSaNazivom(trenutniKvizInfo.naziv).zaustavljen==true) {
                         var kviz = dajKvizSaNazivom(trenutniKvizInfo.naziv)
@@ -70,18 +67,18 @@ class MainActivity : AppCompatActivity(){
                 transaction.commit()
 
                 if(trenutniKvizInfo.predan==true){
-                    bottomNavigation.getMenu().findItem(R.id.predajKviz).setVisible(false);
-                    bottomNavigation.getMenu().findItem(R.id.zaustaviKviz).setVisible(false);
+                    bottomNavigation.getMenu().findItem(R.id.predajKviz).setVisible(false)
+                    bottomNavigation.getMenu().findItem(R.id.zaustaviKviz).setVisible(false)
 
-                    bottomNavigation.getMenu().findItem(R.id.kvizovi).setVisible(true);
-                    bottomNavigation.getMenu().findItem(R.id.predmeti).setVisible(true);
+                    bottomNavigation.getMenu().findItem(R.id.kvizovi).setVisible(true)
+                    bottomNavigation.getMenu().findItem(R.id.predmeti).setVisible(true)
                 }else{
 
-                    bottomNavigation.getMenu().findItem(R.id.predajKviz).setVisible(true);
-                    bottomNavigation.getMenu().findItem(R.id.zaustaviKviz).setVisible(true);
+                    bottomNavigation.getMenu().findItem(R.id.predajKviz).setVisible(true)
+                    bottomNavigation.getMenu().findItem(R.id.zaustaviKviz).setVisible(true)
 
-                    bottomNavigation.getMenu().findItem(R.id.kvizovi).setVisible(false);
-                    bottomNavigation.getMenu().findItem(R.id.predmeti).setVisible(false);
+                    bottomNavigation.getMenu().findItem(R.id.kvizovi).setVisible(false)
+                    bottomNavigation.getMenu().findItem(R.id.predmeti).setVisible(false)
                 }
 
                 trenutniKvizInfo = KvizInfo("","",false,false, mutableListOf())
@@ -91,8 +88,8 @@ class MainActivity : AppCompatActivity(){
             R.id.zaustaviKviz -> {
 
 
-                trenutniKvizInfo.predan=false;
-                trenutniKvizInfo.zaustavljen=true;
+                trenutniKvizInfo.predan=false
+                trenutniKvizInfo.zaustavljen=true
                 if(dajKvizSaNazivom(trenutniKvizInfo.naziv).naziv!=""){
                     if(dajKvizSaNazivom(trenutniKvizInfo.naziv).zaustavljen==true) {
                         var kviz = dajKvizSaNazivom(trenutniKvizInfo.naziv)
@@ -103,11 +100,11 @@ class MainActivity : AppCompatActivity(){
                 KorisnikRepository.informacije.add(trenutniKvizInfo)
 
 
-                bottomNavigation.getMenu().findItem(R.id.predajKviz).setVisible(false);
-                bottomNavigation.getMenu().findItem(R.id.zaustaviKviz).setVisible(false);
+                bottomNavigation.getMenu().findItem(R.id.predajKviz).setVisible(false)
+                bottomNavigation.getMenu().findItem(R.id.zaustaviKviz).setVisible(false)
 
-                bottomNavigation.getMenu().findItem(R.id.kvizovi).setVisible(true);
-                bottomNavigation.getMenu().findItem(R.id.predmeti).setVisible(true);
+                bottomNavigation.getMenu().findItem(R.id.kvizovi).setVisible(true)
+                bottomNavigation.getMenu().findItem(R.id.predmeti).setVisible(true)
 
 
                 val kvizoviFragment = FragmentKvizovi.newInstance()
@@ -134,8 +131,8 @@ class MainActivity : AppCompatActivity(){
         bottomNavigation= findViewById(R.id.bottomNav)
         bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         bottomNavigation.selectedItemId= R.id.kvizovi
-        bottomNavigation.getMenu().findItem(R.id.predajKviz).setVisible(false);
-        bottomNavigation.getMenu().findItem(R.id.zaustaviKviz).setVisible(false);
+        bottomNavigation.getMenu().findItem(R.id.predajKviz).setVisible(false)
+        bottomNavigation.getMenu().findItem(R.id.zaustaviKviz).setVisible(false)
         openFragment(FragmentKvizovi.newInstance())
 
 

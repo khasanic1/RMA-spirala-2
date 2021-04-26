@@ -10,7 +10,7 @@ fun korisnik(): Korisnik {
     return Korisnik(0,mutableListOf(Kviz(
         "Kviz 2",
         "Inženjerska matematika 1",
-        datum(10,4,2021),
+        datum(11,4,2021),
         datum(20,4,2022),null,
         2,"RI1-2", null
     )))
